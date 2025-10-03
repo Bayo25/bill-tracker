@@ -8,7 +8,10 @@ import NavBar from './components/NavBar'
 
 function App() {
   const [shouldShowAddCategory, setshouldShowAddCategory] = useState(false)
+  const [shouldShowAddBill, setShouldShowAddBill] = useState(true)
   const [categories, setCategories] = useState([])
+  const [bills, setBills] = useState([])
+
 
 
   const showAddCategory = () => {
@@ -27,16 +30,32 @@ function App() {
     localStorage.setItem('categories', JSON.stringify(updatedCatorgories)) 
   }
 
+  const addBills = (amount, category, date) => {
+    const bill = { amount, category, date }
+    const updatedBills = [...(bills || []), bill]
+    setBills(updatedBills)
+    setShouldShowAddBill(false)
+    localStorage.setItem('bills', JSON.stringify(updatedBills))
+  }
+
   // retrieve the data stored when application starts
   useEffect(() => {
     const categoriesInLocalStorage = JSON.parse(localStorage.getItem('categories'))
+    const billsInLocalStorage = JSON.parse(localStorage.getItem('bills'))
 
-    if(categoriesInLocalStorage !== categories) {
-      setCategories(categoriesInLocalStorage)
-    }
+    setCategories(categoriesInLocalStorage)
+    setBills(billsInLocalStorage)
+
+    // if(categoriesInLocalStorage !== categories) {
+    //   setCategories(categoriesInLocalStorage)
+    // }
 
     if(!categoriesInLocalStorage) {
       setshouldShowAddCategory(true)
+    }
+
+    if(!billsInLocalStorage) {
+      setShouldShowAddBill(true)
     }
   }, [])
 
@@ -46,10 +65,12 @@ function App() {
         {
           shouldShowAddCategory ? (
             <AddCategory onSubmit={addCategory}/>
-          ) : (
+          ) : shouldShowAddBill? (<AddBills onSubmit={addBills} categories={categories}/>): (
             <section>
               <NavBar categories={categories} showAddCategory={showAddCategory}/>
-              <BillsTable /> 
+              <section className='container flex'>
+                <BillsTable />           
+              </section>
             </section>
             )
         }
