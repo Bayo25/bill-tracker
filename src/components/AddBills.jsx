@@ -9,9 +9,7 @@ const AddBills = (props) => {
     const [date, setDate] =useState(new Date())
 
     const handleChangeAmount = (e) => {
-        let newAmount = parseInt(e.target.value)
-        if(isNaN(newAmount)) newAmount = ''
-        setAmount(newAmount)
+        setAmount(parseInt(e.target.value), 10)
     }
 
     const handleSubmit =(e) => {
@@ -44,7 +42,7 @@ const AddBills = (props) => {
                                 value={amount}
                                 onChange={handleChangeAmount}
                                 type="text" />
-                            <select onChange={(e) => setCategory(e.target.value)}>
+                            <select onChange={(e) => e.target.value}>
                                 {props.categories? props.categories.map((value, index) => {
                                     return (
                                         <option key={index} value={value}>
