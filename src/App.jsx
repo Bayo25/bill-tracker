@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import AddBill from './components/AddBills'
+import AddBill from './components/AddBill'
 import AddCategory from './components/AddCategory'
 import BillsTable from './components/BillsTable'
 import NavBar from './components/NavBar'

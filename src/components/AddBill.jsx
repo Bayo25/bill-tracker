@@ -9,7 +9,7 @@ const AddBills = (props) => {
     const [date, setDate] =useState(new Date())
 
     const handleChangeAmount = (e) => {
-        setAmount(parseInt(e.target.value), 10)
+        setAmount(parseInt(e.target.value, 10))
     }
 
     const handleSubmit =(e) => {
@@ -28,10 +28,10 @@ const AddBills = (props) => {
     return (
         <main>
             <form 
-                className="h-100 w-full flex items-center justify-center fonts-sans"
+                className="h-full w-full flex items-center justify-center fonts-sans"
                 onSubmit={handleSubmit}> 
                 <section className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
-                    <section mb-4>
+                    <section className="mb-4">
                         <h1 className="text-grey-darkest">Enter a new bill</h1>
                         <section className="flex mt-4">
                             <span className="mt-2 mr-1">₦</span>
@@ -42,7 +42,7 @@ const AddBills = (props) => {
                                 value={amount}
                                 onChange={handleChangeAmount}
                                 type="text" />
-                            <select onChange={(e) => e.target.value}>
+                            <select onChange={(e) => setCategory(e.target.value)}>
                                 {props.categories? props.categories.map((value, index) => {
                                     return (
                                         <option key={index} value={value}>
